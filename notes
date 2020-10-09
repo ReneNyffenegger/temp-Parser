@@ -1,3 +1,7 @@
+https://blog.reverberate.org/2013/07/ll-and-lr-parsing-demystified.html
+
+
+
 Chomsky hierarchy
 ----------------
 
@@ -49,6 +53,16 @@ LL parsers can support regex-like operators in grammars
    This is a really nice advantage of LL, because grammars are often more readable with these rich
    grammar extensions. In practice this helps mitigate the more restrictive grammar rules of LL,
    since many things that you’d want left-recursion for you can use repetition operators instead.
+   
+   
+The primary difference between how LL and LR parsers operate is
+that an LL parser outputs a pre-order traversal of the parse tree and an LR parser outputs a post-order traversal.   
+   
+                                            | 1 + 2 * 3
+                                            + ------------
+LL parsing corresponds to Polish Notation,  | + 1 * 2 3  // Polish (prefix) expression; pre-order traversal.
+   whereas
+LR corresponds to Reverse Polish Notation.  | 1 2 3 * +  // Reverse Polish (postfix) expression; post-order traversal.  
 
 ****
 
@@ -57,6 +71,15 @@ There is no LL(0) Parser
 LL(1) is what you need to build a recursive-descent parser. 
 
 *****
+
+
+During an LL parse, the parser continuously chooses between two actions:
+   - Predict: Based on the leftmost nonterminal and some number of lookahead tokens, choose which production ought to be applied to get closer to the input string.
+   - Match: Match the leftmost guessed terminal symbol with the leftmost unconsumed symbol of input.
+   
+In an LR parser, there are two actions:
+   - Shift: Add the next token of input to a buffer for consideration.
+   - Reduce: Reduce a collection of terminals and nonterminals in this buffer back to some nonterminal by reversing a production.   
 
 Lookahead
 ----------
