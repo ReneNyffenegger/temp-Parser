@@ -45,6 +45,11 @@ LL vs LR
 LR parsers can handle more grammars
 LR parsers can also handle left recursion, which LL parsers cannot.
 
+LL parsers can support regex-like operators in grammars
+   This is a really nice advantage of LL, because grammars are often more readable with these rich
+   grammar extensions. In practice this helps mitigate the more restrictive grammar rules of LL,
+   since many things that you’d want left-recursion for you can use repetition operators instead.
+
 ****
 
 There is no LL(0) Parser
