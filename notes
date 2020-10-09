@@ -40,3 +40,21 @@ LL vs LR
     It may use backtracking or dynamic programming.  It uses dynamic programming.
     LL is easier to write.                           LR is difficult to write.
     examples: LL(0), LL(1)                           LR(0), SLR(1), LALR(1), CLR(1)
+
+
+****
+
+LL(1) is what you need to build a recursive-descent parser. 
+
+
+***
+
+LR(1) means that you can choose proper rule to reduce by knowing all tokens that will be reduced plus one token after them.
+There are no problems with AND in boolean queries and in BETWEEN operation. The following grammar, for example is LL(1), and thus is LR(1) too:
+
+   expr ::= and_expr | between_expr | variable
+   and_expr ::= expr "and" expr
+   between_expr ::= "between" expr "and" expr
+   variable ::= x
+   
+I believe that the whole SQL grammar is even simpler than LR(1). Probably LR(0) or even LL(n).
