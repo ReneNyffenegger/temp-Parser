@@ -1,0 +1,42 @@
+Chomsky hierarchy
+----------------
+
+  grammars
+  --------
+  Type-0  | all formal grammars. Can be recognized by a Turing machine | aka recursively enumerable or Turing-recognizable
+  Type-1  | generate context-sensitive languages
+  Type-2  | generate context-free languages. Can be recognized by a non-deterministic pushdown automaton.   its subset of deterministic context-free language—are the theoretical basis for the phrase structure of most programming languages, though their syntax also includes context-sensitive name resolution due to declarations and scope. Often a subset of grammars is used to make parsing easier, such as by an LL parser.
+  Type-3  | generate "regular languages"
+  
+ Regular languages
+ -----------------
+ 
+     A regular language in the strict sense of the latter notion used in theoretical computer science
+     (as opposed to many regular expressions engines provided by modern programming languages, which are augmented
+     with features that allow recognition of languages that cannot be expressed by a classic regular expression). 
+
+LL Parser
+---------
+
+  LL Parser includes both the recursive descent parser and non-recursive descent parser.
+  Its one type uses backtracking while another one uses parsing table. Theses are top down parser.
+     
+LL vs LR
+--------
+  first letter (L) stands for Left to right
+  second letters (L or R) stands for 'leftmost derivation' or 'rightmost derivation'
+  
+  LL                                               LR
+  constructed in top down                          bottom up
+  non-terminals are expanded.                      are compressed
+  Starts with the start symbol(S).                 ends with start symbol
+  Ends when stack used becomes empty.              Starts with empty stack
+  Pre-order traversal of the parse tree.           Post-order traversal of the parser tree.
+  Terminal is read after popping out of stack.  	 Terminal is read before pushing into the stack.
+  It may use backtracking or dynamic programming.  It uses dynamic programming.
+  LL is easier to write.                           LR is difficult to write.
+  examples: LL(0), LL(1)                           LR(0), SLR(1), LALR(1), CLR(1)
+    
+    It may use backtracking or dynamic programming.  It uses dynamic programming.
+    LL is easier to write.                           LR is difficult to write.
+    examples: LL(0), LL(1)                           LR(0), SLR(1), LALR(1), CLR(1)
