@@ -44,8 +44,39 @@ LL vs LR
 
 ****
 
+There is no LL(0) Parser
+
 LL(1) is what you need to build a recursive-descent parser. 
 
+*****
+
+Lookahead
+----------
+   LL and LR parsers are “on-line,” meaning that they can start producing output while they are still consuming input.
+
+   But in many cases the tokens prior to a stream position do not contain enough information for the parser to know whether it should insert a rule or
+   not (or if so, which rule it should insert). So the parser will “look ahead” in the stream to see what the next token(s) are before it makes a decision.
+   When you see designations like LL(1), LR(0), etc. the number in parentheses is the number of tokens of lookahead.
+   
+   
+   LL lookahead counts from the beginning of the rule’s tokens,
+   whereas LR lookahead counts from the end.
+   
+   This gives LR parsers a huge advantage, because they get to see all of the rule’s tokens
+   (and maybe some lookahead) before they have to commit to a decision, whereas LL parsers only get to see the first few tokens of the rule.
+   
+                                 +---- LL look ahead starts here
+                                 |
+                                 |             +--- LR look ahead starts here
+                                 V             V
+   token stream:     T1 T2 T3 T4 T5 ....    Tw Tx Ty Tz
+                                |             |   
+                                |  tokens     |
+                                |  for rule R |
+                                +-------------+
+
+
+    This is why there is such a thing as an LR(0) parser, whereas an LL(0) parser would be impossible
 
 ***
 
@@ -58,3 +89,6 @@ There are no problems with AND in boolean queries and in BETWEEN operation. The 
    variable ::= x
    
 I believe that the whole SQL grammar is even simpler than LR(1). Probably LR(0) or even LL(n).
+
+
+
