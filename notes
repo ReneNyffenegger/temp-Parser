@@ -42,6 +42,9 @@ LL vs LR
     examples: LL(0), LL(1)                           LR(0), SLR(1), LALR(1), CLR(1)
 
 
+LR parsers can handle more grammars
+LR parsers can also handle left recursion, which LL parsers cannot.
+
 ****
 
 There is no LL(0) Parser
@@ -77,6 +80,14 @@ Lookahead
 
 
     This is why there is such a thing as an LR(0) parser, whereas an LL(0) parser would be impossible
+    
+    Since LR lookahead starts from the end of a rule, a LR(1) parser has strictly more information available
+    to it when making a decision than an LL(1) parser. It follows that LR(1) parsers can parse strictly more grammars than LL(1)
+    (modulo LL-only grammar extensions; see below). LR parsers can also handle left recursion, which LL parsers cannot.
+    
+    On the other hand, since LL parsers commit to what rule they are parsing before they parse that rule’s tokens,
+    and LL parser knows the context of what it is parsing whenever it parses a token.
+    While that is more difficult job (since they have less information to go on), it also leads to some important advantages.
 
 ***
 
