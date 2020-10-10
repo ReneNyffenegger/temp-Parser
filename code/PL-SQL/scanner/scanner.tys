@@ -11,14 +11,14 @@ create or replace type scanner as object (
 --       read with read_char
 --       Will be set to null as soon as EOF is reached (and
 --       eof_reached_ set to 1)
-         next_position_      number(7),
+--q      next_position_      number(7),
 
 --       Initializes the 'base' class. Used because PL/SQL lacks a 'super' keyword (or
 --       its respective functionality). Supposed to be called by the constructors of 
 --       derived classes;
          instantiable     final member procedure init(self in out scanner),
 
---       This procedure is supposed to be called by the lexter.
+--       This procedure is supposed to be called by the lexer.
 --       It will call read_char.
          instantiable     final member procedure next_char(self in out scanner),
 

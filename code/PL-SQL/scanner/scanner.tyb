@@ -2,7 +2,7 @@ create or replace type body scanner as
 
   instantiable final member procedure init (self in out scanner) is -- {
   begin
-     next_position_ := 0;
+--q  next_position_ := 0;
      eof_reached_   := 0;
   end init; -- }
 
@@ -26,11 +26,11 @@ create or replace type body scanner as
       current_character_ := read_char;
       if current_character_ is null then -- {
          eof_reached_   := 1;
-         next_position_ := null;
+--q      next_position_ := null;
          return;
       end if; -- }
 
-      next_position_ := next_position_ + 1;
+--q   next_position_ := next_position_ + 1;
 
   end next_char; -- }
 

@@ -21,11 +21,12 @@ create or replace type body scanner_varchar2 as
            return null;
         end if;
 
-        if length(program_) < next_position_  then
-           null; -- TODO_0071
-        end if;
+--q     if length(program_) < next_position_  then
+--q        null; -- TODO_0071
+--q     end if;
 
-        return substr(program_, next_position_+1, 1);
+        next_position_ := next_position_ + 1;
+        return substr(program_, next_position_, 1);
 
      end read_char; -- }
 
