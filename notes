@@ -3,6 +3,12 @@ https://blog.reverberate.org/2013/07/ll-and-lr-parsing-demystified.html
 
 DFA = Deterministic Finite Automation
 
+Shunting-yard algorithm: 
+  A method for parsing mathematical expressions specified in infix notation.
+  It can produce either
+    - a postfix notation string, also known as Reverse Polish notation (RPN), or
+    - an abstract syntax tree (AST). 
+
 
 Chomsky hierarchy
 ----------------
