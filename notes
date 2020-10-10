@@ -1,6 +1,8 @@
 https://blog.reverberate.org/2013/07/ll-and-lr-parsing-demystified.html
 
 
+DFA = Deterministic Finite Automation
+
 
 Chomsky hierarchy
 ----------------
