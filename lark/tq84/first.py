@@ -17,7 +17,9 @@ start: item+
 
 parsed = parser.parse("""
 
-  4 f z 3 q 2 9 z
+  a b c 1
+  2 3 x y
+  999 qqq
 
 """)
 
