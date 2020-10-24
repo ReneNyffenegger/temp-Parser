@@ -11,16 +11,15 @@ start: item+
   CHAR:  ("a" .. "z")
   DIGIT: ("0" .. "9")
 
-    %import common.WS
-    %ignore WS
+  WS: (" " | "\\n" | "\\t")  // Or %import common.WS
+  %ignore WS
+
 """)
 
-parsed = parser.parse("""
-
-  a b c 1
-  2 3 x y
-  999 qqq
-
+parsed = parser.parse(""" 
+	a b c 1
+	2 3 x y
+	999 qqq
 """)
 
 for i in parsed.children:
