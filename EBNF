@@ -1,0 +1,9 @@
+Grammars can be written with EBNF.
+
+An EBNF grammar consists of rules(?)
+
+    name: production
+
+ or informally
+
+    rule: rule1, "keyword", rule2, rule3

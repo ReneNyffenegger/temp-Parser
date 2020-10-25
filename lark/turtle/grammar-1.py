@@ -1,3 +1,8 @@
+#
+#  http://blog.erezsh.com/how-to-write-a-dsl-in-python-with-lark/
+#
+#  https://github.com/lark-parser/lark/blob/master/examples/turtle_dsl.py
+#
 from lark import Lark
 
 turtle_grammar = """
