@@ -1,26 +1,7 @@
 from lark import Lark
 
-
-parser = Lark("""
-
-start: item+
-  item: DIGIT         -> dig
-      | CHAR          -> chr
-
-
-  CHAR:  ("a" .. "z")
-  DIGIT: ("0" .. "9")
-
-  WS: (" " | "\\n" | "\\t")  // Or %import common.WS
-  %ignore WS
-
-""")
-
-parsed = parser.parse(""" 
-	a b c 1
-	2 3 x y
-	999 qqq
-""")
+parser = Lark(open('first.grammar').read())
+parsed = parser.parse(open('first.program').read())
 
 for i in parsed.children:
 #   print(i)
