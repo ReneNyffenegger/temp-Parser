@@ -1,4 +1,9 @@
-Grammars can be written with EBNF.
+EBNF is a *syntactic metalanguage*.
+
+The syntax of Algol 60 was defined with BNF (Backus Naur Form)
+
+EBNF is useful to define the grammar of programming languages.
+
 
 An EBNF grammar consists of rules(?)
 
@@ -7,3 +12,8 @@ An EBNF grammar consists of rules(?)
  or informally
 
     rule: rule1, "keyword", rule2, rule3
+
+
+------
+
+  The official ISO EBNF spec (ISO/IEC 14977:1996) can be freely downloaded from the ISO website https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html
