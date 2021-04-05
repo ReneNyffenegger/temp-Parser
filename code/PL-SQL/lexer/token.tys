@@ -1,0 +1,19 @@
+create or replace type token as object (
+
+  token_       clob,
+  type_        varchar2(   5),  -- 'WS', 'REM', 'FLT', 'NUM', 'ID', 'Id'
+
+  line_start   number(5),
+  col_start    number(6),
+
+  line_end     number(5),
+  col_end      number(6),
+
+--pos_in_line  number(4),
+
+  constructor function token(/* pos in number, */ line in number, col in number) return self as result,
+  final member procedure append(self in out token, c in char)
+
+
+) final instantiable;
+/
