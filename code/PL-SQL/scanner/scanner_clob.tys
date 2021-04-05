@@ -1,7 +1,7 @@
 create or replace type scanner_clob under scanner (
 
      program_       clob,
-     next_position_ number(5),
+     next_position_ number(7),
 
      constructor function scanner_clob(program in clob) return self as result,
 
