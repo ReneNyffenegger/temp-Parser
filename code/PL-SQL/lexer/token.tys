@@ -9,9 +9,7 @@ create or replace type token as object (
   line_end     number(5),
   col_end      number(6),
 
---pos_in_line  number(4),
-
-  constructor function token(/* pos in number, */ line in number, col in number) return self as result,
+  constructor function token(line in number, col in number) return self as result,
   final member procedure append(self in out token, c in char)
 
 
