@@ -130,6 +130,7 @@ create or replace type body lexer as
     final instantiable member procedure next_token(self in out lexer) is -- {
     begin
 
+
         if scanner_.eof_reached_ = 1 then -- {
            current_token_ := null;
            return;
@@ -316,7 +317,7 @@ create or replace type body lexer as
 
         end if; -- }
 
-        if isIdentStartChar then -- {
+        if isIdentStartChar then
 
            current_token_.type_  := 'ID';
 
@@ -329,29 +330,37 @@ create or replace type body lexer as
               if scanner_.current_character_ = '''' then -- {
                  -- It is such a quoted string
                  declare -- {
-                   character_after_apostrophe char(1);
+                   q_character_to_end_quote char(1);
                  begin
 
                    current_token_.append('''');
                    current_token_.type_ := 'STR';
 
                    scan_next_char;
-                   character_after_apostrophe := scanner_.current_character_;
-                   current_token_.append(character_after_apostrophe);
+                   q_character_to_end_quote := scanner_.current_character_;
+                   current_token_.append(q_character_to_end_quote);
+                --
+                -- Special case for {, [ and (. These chracters must be
+                -- reversed, so that the following quoted string can be
+                -- parsed:
+                --
+                --    q'{ foo }'
+                --
+                   q_character_to_end_quote := translate(q_character_to_end_quote, '{[(', '}])');
 
                    loop -- Until we find the end of the quoted string. -- {
 
                      scan_next_char;
                      current_token_.append(scanner_.current_character_);
                      
-                     if scanner_.current_character_ = character_after_apostrophe then
+                     if scanner_.current_character_ = q_character_to_end_quote then
 
                         scan_next_char;
                         current_token_.append(scanner_.current_character_);
 
                         if scanner_.current_character_ = '''' then
 
-                           -- End of quoted string;
+                           -- End of quoted string
                            exit;
                         end if;
 
@@ -376,7 +385,7 @@ create or replace type body lexer as
 
            return;
 
-        end if; -- }
+        end if;
 
         if scanner_.current_character_ = '.' then -- {
            current_token_.token_ := '.';

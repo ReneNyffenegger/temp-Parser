@@ -13,7 +13,10 @@ declare
      '  string'                    || chr( 9) || ' := ''stringvalue'' || ''more''''string'';' || chr(10) ||
      '  qab :=  4.4;q := .98;q1:=q''!foo'' ! bar!'';' || chr(10) ||
      '  "xne"."two" (42.0,-24)'    || chr(10) ||
-     '  C_FOO foo_tab%ROWTYPE > <  bcd<=efg>=hij   != <> << >> >< => ' -- }
+     '  C_FOO foo_tab%ROWTYPE > <  bcd<=efg>=hij   != <> << >> >< => ' || chr(10) ||
+--   q'['foo']'
+     q'[q'{qqq'}QQQ}']'
+     -- }
 
   );
 
@@ -168,7 +171,12 @@ begin
   check_token('SYM' ,/* 303,*/   12,   59, '<' );
   check_token('WS'  ,/* 304,*/   12,   60, ' ');
   check_token('SYM' ,/* 305,*/   12,   61, '=>' );
-  check_token('WS'  ,/* 307,*/   12,   63, ' '); -- }
+  check_token('WS'  ,/* 307,*/   12,   63, ' ' || chr(10)); -- }
+
+--dbms_output.put_line('aaax');
+  check_token('STR' ,/*    ,*/   13,    1, q'[q'{qqq'}QQQ}']');
+--check_token('STR' ,/*    ,*/   13,    1, q'['foo']');
+--dbms_output.put_line('yyyy');
 
   if l.current_token_ is not null then -- {
      raise_application_error(-20800, 'Current token should be null but is: ' || l.current_token_.token_);
