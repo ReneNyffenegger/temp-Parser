@@ -140,4 +140,10 @@ There are no problems with AND in boolean queries and in BETWEEN operation. The 
 I believe that the whole SQL grammar is even simpler than LR(1). Probably LR(0) or even LL(n).
 
 
+----------------------------------------------------------------------------------------------------------
+Existing parsers etc:
+   https://github.com/ReneNyffenegger/c4
+
+
+
 
