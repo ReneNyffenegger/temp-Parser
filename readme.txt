@@ -142,7 +142,13 @@ I believe that the whole SQL grammar is even simpler than LR(1). Probably LR(0) 
 
 ----------------------------------------------------------------------------------------------------------
 Existing parsers etc:
-   https://github.com/ReneNyffenegger/c4
+  minimal c parser (interpreter?)
+     - https://github.com/ReneNyffenegger/c4
+     - http://www.t3x.org/subc/index.html     ( SubC - Its internals are described in detail in the book "Practical Compiler Cosntruction" - http://www.t3x.org/reload/index.html - must be bought)
+
+  Tutorials:
+      - https://craftinginterpreters.com/contents.html
+  
 
 
 
