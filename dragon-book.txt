@@ -1,0 +1,27 @@
+context free grammars (grammar for short)   2.2.1
+  - Specifies syntax of a language
+  - Components
+    - terminals, referred to a tokens
+    - non-terminals, sometimes called syntactic variables
+      (a set of strings of terminals)
+    - productions
+      - one non-terminal is the head (or left side)
+      - an arrow
+      - a sequence of terminal and non-terminals (the right side or body)
+      - a designated non-terminal as a start symbol
+     
+
+Token vs terminal 2.2.1
+   The lexical analyzer reads the source file,
+   groups them into lexemes and produces tokens representing the lexemes.
+
+   A token consists of a
+     - name and an
+     - attribute value (which, if present, is a pointer into the symbol table)
+
+
+5+3*5
+
+   expr   → expr + term | expr - term
+   term   → term * factor | term / factor | factor
+   factor → digit | (expr)                                       # a factor cannot be torn apart
