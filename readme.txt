@@ -12,6 +12,10 @@ Shunting-yard algorithm:
     - an abstract syntax tree (AST). 
 
 
+Powerfullness:
+  SLR(1) < LALR(1) < LR(1)          - But they all use the same production rulesw
+
+
 Chomsky hierarchy
 ----------------
 
@@ -19,7 +23,10 @@ Chomsky hierarchy
   --------
   Type-0  | all formal grammars. Can be recognized by a Turing machine | aka recursively enumerable or Turing-recognizable
   Type-1  | generate context-sensitive languages
-  Type-2  | generate context-free languages. Can be recognized by a non-deterministic pushdown automaton.   its subset of deterministic context-free language—are the theoretical basis for the phrase structure of most programming languages, though their syntax also includes context-sensitive name resolution due to declarations and scope. Often a subset of grammars is used to make parsing easier, such as by an LL parser.
+  Type-2  | generate context-free languages.; Can be recognized by a non-deterministic pushdown automaton.
+            its subset of deterministic context-free language—are the theoretical basis for the phrase structure of most programming languages,
+            though their syntax also includes context-sensitive name resolution due to declarations and scope.
+            Often a subset of grammars is used to make parsing easier, such as by an LL parser.
   Type-3  | generate "regular languages"
   
  Regular languages
@@ -28,6 +35,21 @@ Chomsky hierarchy
      A regular language in the strict sense of the latter notion used in theoretical computer science
      (as opposed to many regular expressions engines provided by modern programming languages, which are augmented
      with features that allow recognition of languages that cannot be expressed by a classic regular expression). 
+     
+
+LR Parser  (
+---------
+  In 1965, Donald Knuth invented the LR parser (
+     Left to Right,
+     Rightmost derivation
+  )
+
+  The LR parser can recognize any deterministic context-free language in
+  linear-bounded time.
+
+  Rightmost derivation has very large memory requirements and implementing an
+  LR parser was impractical due to the limited memory of computers at that time
+
 
 LL Parser
 ---------
@@ -56,23 +78,65 @@ LL vs LR
     examples: LL(0), LL(1)                           LR(0), SLR(1), LALR(1), CLR(1)
 
 
-LR parsers can handle more grammars
-LR parsers can also handle left recursion, which LL parsers cannot.
+  LR parsers can handle more grammars
+  LR parsers can also handle left recursion, which LL parsers cannot.
 
-LL parsers can support regex-like operators in grammars
-   This is a really nice advantage of LL, because grammars are often more readable with these rich
-   grammar extensions. In practice this helps mitigate the more restrictive grammar rules of LL,
-   since many things that you’d want left-recursion for you can use repetition operators instead.
+  LL parsers can support regex-like operators in grammars
+     This is a really nice advantage of LL, because grammars are often more readable with these rich
+     grammar extensions. In practice this helps mitigate the more restrictive grammar rules of LL,
+     since many things that you’d want left-recursion for you can use repetition operators instead.
+     
    
-   
-The primary difference between how LL and LR parsers operate is
-that an LL parser outputs a pre-order traversal of the parse tree and an LR parser outputs a post-order traversal.   
-   
-                                            | 1 + 2 * 3
-                                            + ------------
-LL parsing corresponds to Polish Notation,  | + 1 * 2 3  // Polish (prefix) expression; pre-order traversal.
-   whereas
-LR corresponds to Reverse Polish Notation.  | 1 2 3 * +  // Reverse Polish (postfix) expression; post-order traversal.  
+  The primary difference between how LL and LR parsers operate is
+  that an LL parser outputs a pre-order traversal of the parse tree and an LR parser outputs a post-order traversal.   
+      
+                                              | 1 + 2 * 3
+                                              + ------------
+  LL parsing corresponds to Polish Notation,  | + 1 * 2 3  // Polish (prefix) expression; pre-order traversal.
+     whereas
+  LR corresponds to Reverse Polish Notation.  | 1 2 3 * +  // Reverse Polish (postfix) expression; post-order traversal.  
+
+
+LALR ( = «Look-ahead LR» or «look-ahead, left-to-right, rightmost derivation parser» )
+---------------------------------------------------------------
+
+  Generally, the LALR parser refers to the LALR(1) parser,
+ just as the LR parser generally refers to the LR(1) parser.
+
+  Similarly, there is an LALR(2) parser with two-token lookahead,
+  and LALR(k) parsers with k-token lookup, but these are rare in actual use. 
+
+  The LALR parser is based on the LR(0) parser,
+     so it can also be denoted
+        LALR(1) = LA(1)LR(0) (1 token of lookahead, LR(0))
+           or more generally
+        LALR(k) = LA(k)LR(0) (k tokens of lookahead, LR(0)).
+
+  There is in fact a two-parameter family of LA(k)LR(j) parsers for all
+  combinations of j and k, which can be derived from the LR(j + k) parser,[9]
+  but these do not see practical use.
+
+  An LALR parser is a simplified version of a -> canonical LR parser.
+
+  The LALR parser was invented by Frank DeRemer in his 1969 PhD dissertation,
+  Practical Translators for LR(k) languages,[
+  -
+  He showed that the
+    - LALR parser has more language recognition power than the LR(0) parser,
+    - while requiring the same number of states as the LR(0) parser for a
+      language that can be recognized by both parsers.
+  This makes the LALR parser a memory-efficient alternative to the LR(1) parser for languages that are LALR.
+
+  It was also proven that there exist LR(1) languages that are not LALR
+     - Despite this weakness, the power of the LALR parser is sufficient for
+       many mainstream computer languages, including Java
+
+   LALR parsers can be automatically generated from a grammar by an LALR parser
+   generator such as Yacc or GNU Bison.
+
+
+SLR - Simple LR Parser
+----------------------
 
 ****
 
