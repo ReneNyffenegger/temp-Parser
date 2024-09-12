@@ -16,7 +16,7 @@ Powerfullness:
   SLR(1) < LALR(1) < LR(1)          - But they all use the same production rulesw
 
 
-Chomsky hierarchy
+Chomsky hierarchy {
 ----------------
 
   grammars
@@ -36,8 +36,8 @@ Chomsky hierarchy
      (as opposed to many regular expressions engines provided by modern programming languages, which are augmented
      with features that allow recognition of languages that cannot be expressed by a classic regular expression). 
      
-
-LR Parser  (
+}
+LR Parser  {
 ---------
   In 1965, Donald Knuth invented the LR parser (
      Left to Right,
@@ -50,15 +50,23 @@ LR Parser  (
   Rightmost derivation has very large memory requirements and implementing an
   LR parser was impractical due to the limited memory of computers at that time
 
-
-LL Parser
+}
+LL Parser {
 ---------
 
   LL Parser includes both the recursive descent parser and non-recursive descent parser.
   Its one type uses backtracking while another one uses parsing table. Theses are top down parser.
+
+  There is no LL(0) Parser
+
+  LL(1) is what you need to build a recursive-descent parser. 
+
+ (But nobody is using an LL parser…)
      
-LL vs LR
+}
+LL vs LR {
 --------
+
   first letter (L) stands for Left to right
   second letters (L or R) stands for 'leftmost derivation' or 'rightmost derivation'
   
@@ -97,7 +105,63 @@ LL vs LR
   LR corresponds to Reverse Polish Notation.  | 1 2 3 * +  // Reverse Polish (postfix) expression; post-order traversal.  
 
 
-LALR ( = «Look-ahead LR» or «look-ahead, left-to-right, rightmost derivation parser» )
+  { Two actions
+
+   During an LL parse, the parser continuously chooses between two actions:
+      - Predict: Based on the leftmost nonterminal and some number of lookahead tokens, choose which production ought to be applied to get closer to the input string.
+      - Match: Match the leftmost guessed terminal symbol with the leftmost unconsumed symbol of input.
+      
+   In an LR parser, there are two actions:
+      - Shift: Add the next token of input to a buffer for consideration.
+      - Reduce: Reduce a collection of terminals and nonterminals in this buffer back to some nonterminal by reversing a production.   
+
+  }
+  { Stackoverflow answer - https://softwareengineering.stackexchange.com/a/419370/3406
+
+    SO NO ONE ACTUALLY USES LL PARSERS - They seem simple but usually introduce more problems than they solve. They are not practical for most languages.
+
+    True LL parsers are fast and simple – but also completely unable to parse
+    many interesting languages.
+
+    Many real-world programming languages are in
+    the LALR class, which is closely related to LR but can be parsed far more
+    efficiently. 
+
+    These different approaches like LL, LALR, LR are not just different
+    algorithms, but they also correspond to a different set of languages that
+    can be parsed.
+
+    For example, let's consider arithmetic expressions with this simple grammar:
+      
+      Expr ::= Expr "+" Term;
+      Expr ::= Term;
+      Term ::= Term "*" Factor;
+      Term ::= Factor;
+      Factor ::= Var;
+      Factor ::= Num;
+
+   This grammar would turn the input x * 3 + 2 into the parse tree
+   Expr(Term(Term(Factor(Var(x)), "*", Factor(Num(3))), "+",
+   Term(Factor(Num(2)))).
+
+   While LL(k) is able to recognize this language, it cannot produce the
+   correct parse tree because it cannot handle left-recursive productions
+   directly.
+   Where an LL parser is used, this frequently requires substantial
+   post-processing of the parse tree to get a useful representation of the
+   input. Also, massaging the grammar to fit the limitations of LL is very
+   tedious, though some parser generators can do this automatically. 
+
+   And to be clear: LR also has some restrictions that the grammar needs to be written around.
+   post-processing of the parse tree to get a useful representation of the
+   input.
+
+
+  }
+
+
+}
+LALR ( = «Look-ahead LR» or «look-ahead, left-to-right, rightmost derivation parser» ) {
 ---------------------------------------------------------------
 
   Generally, the LALR parser refers to the LALR(1) parser,
@@ -134,26 +198,17 @@ LALR ( = «Look-ahead LR» or «look-ahead, left-to-right, rightmost derivation 
    LALR parsers can be automatically generated from a grammar by an LALR parser
    generator such as Yacc or GNU Bison.
 
-
-SLR - Simple LR Parser
+}
+SLR - Simple LR Parser {
 ----------------------
 
-****
+}
 
-There is no LL(0) Parser
 
-LL(1) is what you need to build a recursive-descent parser. 
 
 *****
 
 
-During an LL parse, the parser continuously chooses between two actions:
-   - Predict: Based on the leftmost nonterminal and some number of lookahead tokens, choose which production ought to be applied to get closer to the input string.
-   - Match: Match the leftmost guessed terminal symbol with the leftmost unconsumed symbol of input.
-   
-In an LR parser, there are two actions:
-   - Shift: Add the next token of input to a buffer for consideration.
-   - Reduce: Reduce a collection of terminals and nonterminals in this buffer back to some nonterminal by reversing a production.   
 
 Lookahead
 ----------
