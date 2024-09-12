@@ -1,3 +1,19 @@
+{ Parsing problem
+
+  Take a string of characters and produce an abstract syntax tree.
+
+  Parsing takes as input a context-free grammar G and some input string of
+  length n, and produces a parse tree for the string according to G, if one
+  exists. 
+
+  For industrial programming languages, the gold standard is the hand-written recursive-descent
+  parser, which typically runs in time O(n) with a very small constant factor, independent of |G|
+
+
+
+}
+
+
 https://blog.reverberate.org/2013/07/ll-and-lr-parsing-demystified.html
 
 http://parsingintro.sourceforge.net/
@@ -12,21 +28,35 @@ Shunting-yard algorithm:
     - an abstract syntax tree (AST). 
 
 
-Powerfullness:
+Powerfullness: {
+
   SLR(1) < LALR(1) < LR(1)          - But they all use the same production rulesw
 
+     our conclusion is that
+     even LR(k)—the most general of this family—is, on its own, not sufficiently general to capture
+     the grammars of real industrial languages in a tractable manner.
 
+}
+{ ETL Family
+
+   Ear, Tom, Leo
+
+}
 Chomsky hierarchy {
 ----------------
 
   grammars
   --------
-  Type-0  | all formal grammars. Can be recognized by a Turing machine | aka recursively enumerable or Turing-recognizable
+  Type-0  | all formal grammars (i. e. the most general class of grammars).
+          | Can be recognized by a Turing machine - aka recursively enumerable or Turing-recognizable
+          |
   Type-1  | generate context-sensitive languages
+          |
   Type-2  | generate context-free languages.; Can be recognized by a non-deterministic pushdown automaton.
-            its subset of deterministic context-free language—are the theoretical basis for the phrase structure of most programming languages,
-            though their syntax also includes context-sensitive name resolution due to declarations and scope.
-            Often a subset of grammars is used to make parsing easier, such as by an LL parser.
+          | its subset of deterministic context-free language—are the theoretical basis for the phrase structure of most programming languages,
+          | though their syntax also includes context-sensitive name resolution due to declarations and scope.
+          | Often a subset of grammars is used to make parsing easier, such as by an LL parser.
+          |
   Type-3  | generate "regular languages"
   
  Regular languages
@@ -50,6 +80,39 @@ LR Parser  {
   Rightmost derivation has very large memory requirements and implementing an
   LR parser was impractical due to the limited memory of computers at that time
 
+  The study of modern bottom-up (shift/reduce) parsing was pioneered by Knuth , who
+  first defined the LR(k) class of grammars. Subsequent work by DeRemer  and others
+  led to refinements including the definition of
+     - SLR(k) and
+     - LALR(k) grammars,
+  which are less expressive than LR(k) but which enable much more efficient parser generation,
+  and inspired the initial development of popular parser generation tools such as
+    - Yacc  and
+    - Bison
+
+  { LR(1) means....
+
+   LR(1) means that you can choose proper rule to reduce by knowing all tokens that will be reduced plus one token after them.
+   There are no problems with AND in boolean queries and in BETWEEN operation. The following grammar, for example is LL(1), and thus is LR(1) too:
+   
+      expr ::= and_expr | between_expr | variable
+      and_expr ::= expr "and" expr
+      between_expr ::= "between" expr "and" expr
+      variable ::= x
+      
+    I believe that the whole SQL grammar is even simpler than LR(1). Probably LR(0) or even LL(n).
+
+  }
+
+  { Additional ambiguity
+
+    Within the category of online bottom-up parsing, there remains the question of what restrictions
+    we may place on the input grammar, beyond simple unambiguity
+
+    Knuth’s LR(k) is a reasonable starting point
+
+  }
+
 }
 LL Parser {
 ---------
@@ -62,13 +125,47 @@ LL Parser {
   LL(1) is what you need to build a recursive-descent parser. 
 
  (But nobody is using an LL parser…)
+
+ { Is this the problem of LL parsers?
+
+   When I write a parser that cares about arithmetic precedence - which I do, sometimes - the logic goes like this:
+
+    - ah, there's the number one
+    - a plus sign!
+    - the number two! Sweet! That's 1+2! It's an expression!
+    - a multiplication sign. Uh oh.
+    - the number three. Hmm. Well, now we have a problem.
+    - (hacky hacky swizzle swizzle) Ta da! 1+(2*3).
+
+ }
      
+}
+{ ANTLR
+
+  ANTLR  which supports a superset of LL(k) grammars,
+
 }
 LL vs LR {
 --------
 
   first letter (L) stands for Left to right
   second letters (L or R) stands for 'leftmost derivation' or 'rightmost derivation'
+
+ 
+  LL is Top Down
+  LR is Buttom Up
+
+    - In top-down parsing (LL), we require the online parser, with k symbols of
+      lookahead, to emit the name of each production when its occurrence
+      begins in the input
+    - in bottom-up parsing (LR), it is emitted when its occurence ends. 
+
+  It is fairly clear that top-down parsing is not sufficiently general for
+  practical programming languages: even in simple cases such as binary
+  operator- precedence grammars, one does not know whether one is parsing the
+  production “E → E + E” or the production “E → E ×E” until after seeing the
+  entirety of the first occurrence of E.
+
   
   LL                                               LR
   constructed in top down                          bottom up
@@ -108,12 +205,16 @@ LL vs LR {
   { Two actions
 
    During an LL parse, the parser continuously chooses between two actions:
-      - Predict: Based on the leftmost nonterminal and some number of lookahead tokens, choose which production ought to be applied to get closer to the input string.
-      - Match: Match the leftmost guessed terminal symbol with the leftmost unconsumed symbol of input.
+      - Predict: Based on the leftmost nonterminal and some number of lookahead
+                 tokens, choose which production ought to be applied to get closer to
+                 the input string.
+      - Match  : Match the leftmost guessed terminal symbol with the leftmost
+                 unconsumed symbol of input.
       
    In an LR parser, there are two actions:
-      - Shift: Add the next token of input to a buffer for consideration.
-      - Reduce: Reduce a collection of terminals and nonterminals in this buffer back to some nonterminal by reversing a production.   
+      - Shift :  Add the next token of input to a buffer for consideration.
+      - Reduce:  Reduce a collection of terminals and nonterminals in this
+                 buffer back to some nonterminal by reversing a production.   
 
   }
   { Stackoverflow answer - https://softwareengineering.stackexchange.com/a/419370/3406
@@ -165,7 +266,7 @@ LALR ( = «Look-ahead LR» or «look-ahead, left-to-right, rightmost derivation 
 ---------------------------------------------------------------
 
   Generally, the LALR parser refers to the LALR(1) parser,
- just as the LR parser generally refers to the LR(1) parser.
+  just as the LR parser generally refers to the LR(1) parser.
 
   Similarly, there is an LALR(2) parser with two-token lookahead,
   and LALR(k) parsers with k-token lookup, but these are rare in actual use. 
@@ -199,8 +300,32 @@ LALR ( = «Look-ahead LR» or «look-ahead, left-to-right, rightmost derivation 
    generator such as Yacc or GNU Bison.
 
 }
+{ Recursive descent parsers
+
+  The prevailing consensus is that automatic parser generation is not
+  practical for real programming languages:
+    - LALR parsers—and even
+    - the more general LR parsers, 
+  in many cases—are considered to be far too restrictive in the grammars they support,
+  and moreover, LR parsers are often considered too inefficient in practice.
+  -
+  As a result, virtually all modern languages use recursive- descent parsers
+  written by hand, a lengthy and error-prone process that dramatically
+  increases the barrier to new programming language development.
+
+   It is well- known that SLR and LALR, while being highly efficient in their
+   implementation, fail to capture many natural constructs for which it is easy
+   to write recursive descent parsers by hand.
+
+
+}
 SLR - Simple LR Parser {
 ----------------------
+
+}
+{ BNF
+
+  ? BNF is used for top-down grammars?
 
 }
 { Specifying Grammars, EBNF, PEG
@@ -255,15 +380,95 @@ Lookahead {
 
 }
 
-LR(1) means that you can choose proper rule to reduce by knowing all tokens that will be reduced plus one token after them.
-There are no problems with AND in boolean queries and in BETWEEN operation. The following grammar, for example is LL(1), and thus is LR(1) too:
+{ Grammar
 
-   expr ::= and_expr | between_expr | variable
-   and_expr ::= expr "and" expr
-   between_expr ::= "between" expr "and" expr
-   variable ::= x
-   
-I believe that the whole SQL grammar is even simpler than LR(1). Probably LR(0) or even LL(n).
+  
+  An unrestricted grammar G is a quadruple G = (V, T, S, P) where
+
+    V is a finite set of (meta)symbols, or variables.  (sometimes also designated as N for Nonterminal symbols)
+    T is a finite set of terminal symbols.
+    S is a member of V is a distinguished element of V called the start symbol.
+    P is a finite set of productions (or rules).
+
+  { Productions
+
+    A production has the form
+        X -> Y
+    where
+
+      - X ∈ (V ∪ T)+ 
+
+           X is a member of the set of strings composed of any mixture of
+           variables and terminal symbols, but X is not the empty string.
+
+      - Y ∈ (v ∪ T)*
+
+           Y is a member of the set of strings composed of any mixture of
+           variables and terminal symbols; y is allowed to be the empty string.
+
+  }
+
+}
+{ Left recursion
+
+
+  A production of grammar is said to haveleft recursion if the leftmost
+  variable of its RHS is same as variable of its LHS.
+
+  A grammar containing a production having left recursion is called as Left
+  RECURSIVE GRAMMAR
+
+  A Grammar G (V, T, P, S) is left recursive if it has a production in the form.
+
+        X -> X n | y
+
+    i.e. it is left recursive because the left of production is occurring at a
+    first position on the right side of production.
+
+       The following «sentences» can be produced by the grammar:
+
+                    y                         or
+                  X n =        y n            or
+                X n n =      y n n            or
+              X n n n =    y n n n            or
+            X n n n n =  y n n n n …  
+
+              
+
+
+    { Elimination of left recursion
+
+       Left recursion is considered to be problematic for TOP DOWN PARSERS.  
+       Thus, there is an incentive to eliminate it
+
+       Right recursion does not create any problem for the Top down parsers.
+
+       left recursive:
+
+          X -> n | y
+
+       After elimination
+
+         X  -> y X'
+         X' -> n X' | ε
+
+
+         X   =                   y X'
+             =            y n X'  | y ε
+             =          y n n X'  | y n ε
+             =        y n n n X'  | y n n ε
+                         …
+           
+
+
+
+    }
+
+}
+{ Automata theory
+
+
+}
 
 
 ----------------------------------------------------------------------------------------------------------
