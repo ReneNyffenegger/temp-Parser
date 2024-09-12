@@ -203,14 +203,21 @@ SLR - Simple LR Parser {
 ----------------------
 
 }
+{ Specifying Grammars, EBNF, PEG
+
+   PEG is a different way of specifying grammars and an different process for parsing them. If you're used to Bison/Yacc or LALR parsers modeled on Yacc (like Racc), the big things you notice with any PEG parser are:
+     - You automatically get "EBNF"-style operators like "zero-or-more" or
+       "one-or-more" instead of having to specify recursive nonterminals and
+       epsilons.
+     - You typically don't need a separate lexer; PEG parser productions
+       resemble regular expressions.
+     - PEGs use prioritized choice to deal with ambiguities such as
+       dangling-else. PEG grammars are unambiguous.
+   PEG parsers are much easier to build and work with than Yacc-style parsers. The learning curve on PEG is also way, way shorter than for shift-reduce parsers. You should probably be using PEG parsers whenever possible now.
 
 
-
-*****
-
-
-
-Lookahead
+}
+Lookahead {
 ----------
    LL and LR parsers are “on-line,” meaning that they can start producing output while they are still consuming input.
 
@@ -246,7 +253,7 @@ Lookahead
     and LL parser knows the context of what it is parsing whenever it parses a token.
     While that is more difficult job (since they have less information to go on), it also leads to some important advantages.
 
-***
+}
 
 LR(1) means that you can choose proper rule to reduce by knowing all tokens that will be reduced plus one token after them.
 There are no problems with AND in boolean queries and in BETWEEN operation. The following grammar, for example is LL(1), and thus is LR(1) too:
