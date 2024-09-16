@@ -324,6 +324,16 @@ LALR ( = «Look-ahead LR» or «look-ahead, left-to-right, rightmost derivation 
    to write recursive descent parsers by hand.
 
 
+  { Lookahead
+
+    Recursive descent parsers for usable languages hardly ever turn out to be
+    perfectly LL(1) and often involve multiple lookahead tokens, backtracking,
+    or some kind of bottom-up component in the form of precedence climbing or
+    something similar.
+
+
+  }
+
 }
 SLR - Simple LR Parser {
 ----------------------
@@ -385,7 +395,12 @@ Lookahead {
     While that is more difficult job (since they have less information to go on), it also leads to some important advantages.
 
 }
+{ Predictive parsers
 
+  A predictive parser is a type of top-down parser that constructs the parse
+  tree without backtracking. Here are the key aspects of predictive parsers:
+
+}
 { Grammar
 
   
