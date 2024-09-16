@@ -58,14 +58,20 @@ Chomsky hierarchy {
           | Often a subset of grammars is used to make parsing easier, such as by an LL parser.
           |
   Type-3  | generate "regular languages"
+
   
- Regular languages
- -----------------
+  Regular languages
+  -----------------
  
      A regular language in the strict sense of the latter notion used in theoretical computer science
-     (as opposed to many regular expressions engines provided by modern programming languages, which are augmented
+    (as opposed to many regular expressions engines provided by modern programming languages, which are augmented
      with features that allow recognition of languages that cannot be expressed by a classic regular expression). 
      
+}
+{ CFG = Context Free Grammar 
+
+  …
+
 }
 LR Parser  {
 ---------
