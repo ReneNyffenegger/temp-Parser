@@ -1,3 +1,12 @@
+{ Existing parsers with source code
+
+  PowerShell:
+    scheme-lisp
+      - https://github.com/ReneNyffenegger/scheme-lisp/blob/master/chap02pwsh/Tokenizer.ps1
+      - https://github.com/ReneNyffenegger/scheme-lisp/blob/master/chap02pwsh/Parser.ps1
+
+
+}
 { Parsing problem
 
   Take a string of characters and produce an abstract syntax tree.
@@ -8,9 +17,6 @@
 
   For industrial programming languages, the gold standard is the hand-written recursive-descent
   parser, which typically runs in time O(n) with a very small constant factor, independent of |G|
-
-
-
 }
 
 
