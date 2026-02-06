@@ -506,6 +506,8 @@ Existing parsers etc:
      - https://github.com/icyfox168168/C--  A simple C-like grammar complier,Generate executable files for windows x86_64 platform. (seems to require an assembler)
      - https://github.com/Jamesbarford/holyc-lang (An implementation of Terry A. Davis's HolyC)
      - https://github.com/bonaert/tinyc-compiler
+     - https://github.com/rui314/9cc
+     - https://github.com/rui314/chibicc (See also https://www.libhunt.com/compare-9cc-vs-chibicc)
 
   Tutorials:
       - https://craftinginterpreters.com/contents.html
